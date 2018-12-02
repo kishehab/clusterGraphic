@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            var singlesArray = [
+        {jobType: 'inspection'},
+        {jobType: 'inspection'},
+        {jobType: 'inspection'},
+        {jobType: 'maintinance'},
+        {jobType: 'maintinance'},
+        {jobType: 'maintinance'},
+        {jobType: 'maintinance'},
+        {jobType: 'maintinance'},
+        {jobType: 'wellServices'},
+        {jobType: 'wellServices'},
+        {jobType: 'fieldService'}
+        ];
+        
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        var svgNS = svg.namespaceURI;
+        var classification = {};
+
+
+        function createGraphic(singles, height, width){
+            this.height = height;
+            this.width = width;
+
+            var orginX = this.width/2;
+            var orginY = this.height/2;
+
+            var motherCircleRadius = 10;
+            var margin = 5;
+
+            var XLarge = (height/2)*.45;
+            var large = (height/2)*.40;
+            var medium = (height/2)*.35;
+            var small = (height/2)*.30;
+
+            var motherCircle  = new Circle(orginX,orginY,motherCircleRadius);
+
+            for(var i=0; i<singles.length; i++){
+                for(var key in singles[i]){
+                  if(classification[singles[i][key]]===undefined){
+                        classification[singles[i][key]] = 1
+                  } else {
+                        classification[singles[i][key]] = classification[singles[i][key]]+1;
+                  }
+                }
+            }
+
+            console.log(classification);
+
+
+            var upperRight = new Circle(orginX+margin+large, orginY+margin+large, large);
+
+            var lowerRight = new Circle(orginX+margin+XLarge, orginY-margin-XLarge, XLarge);
+
+            var upperLeft = new  Circle(orginX-margin-medium, orginY+margin+medium, medium);
+
+            var lowerLeft = new  Circle(orginX-margin-small, orginY-margin-small, small);
+
+
+
+            svg.appendChild(upperRight.connectToMother(motherCircle));
+
+            svg.appendChild(lowerRight.connectToMother(motherCircle));
+
+            svg.appendChild(upperLeft.connectToMother(motherCircle));
+
+            svg.appendChild(lowerLeft.connectToMother(motherCircle));
+
+
+
+            svg.appendChild(motherCircle.getCircleNode());
+
+            svg.appendChild(upperRight.getCircleNode());
+
+            svg.appendChild(lowerRight.getCircleNode());
+
+            svg.appendChild(upperLeft.getCircleNode());
+
+            svg.appendChild(lowerLeft.getCircleNode());
+
+            svg.appendChild(lowerLeft.getCircleNode());
+               
+
+        }
+
+
+console.log('ddddddddddd');   
+
+
+createGraphic(singlesArray, 100,100);
+
+    function Circle(cx,cy,cr,color,label) {
+
+        this.cx = cx;
+
+        this.cy = cy;
+
+        this.cr = cr;
+
+        this.circle = document.createElementNS(svgNS,'circle');
+
+
+
+        this.constractCircle = function(){
+
+            this.circle.setAttribute('cx', cx);
+
+            this.circle.setAttribute('cy', cy);
+
+            this.circle.setAttribute('r', cr);
+
+            this.circle.addEventListener('mouseover', function(e) {
+
+            //e.currentTarget.setAttribute('fill', 'gray');
+
+            });
+
+        }
+
+
+
+        this.getX = function(){
+
+            return this.cx;
+
+        };
+
+
+
+        this.getY = function(){
+
+            return this.cy;
+
+        };
+
+
+
+        this.getR = function(){
+
+            return this.cr;
+
+        };
+
+
+
+        this.getCircleNode = function() {
+
+            this.constractCircle();
+
+            return this.circle;
+
+        };
+
+
+
+        this.fill = function(color) {
+
+            this.circle.setAttribute('fill', color);
+
+        };
+
+
+
+        this.connectToMother = function(mother){
+
+                var connection = document.createElementNS(svgNS,'line');
+
+                connection.setAttribute('x1', mother.getX());
+
+                connection.setAttribute('y1', mother.getY());
+
+                connection.setAttribute('x2', this.getX());
+
+                connection.setAttribute('y2', this.getY());
+
+                connection.setAttribute("stroke", "red");
+
+                connection.setAttribute("stroke-width", 2);
+
+
+
+                return connection;
+
+        };
+
+
+
+
+    }
+
+
+    //svg.appendChild(c3.getCircleNode());
+
+    document.body.appendChild(svg);
+
+
+
+    var h=document.createElement('a');
+
+    //var t=document.createTextNode(c1.getR());
+
+    //h.appendChild(t);
+
+    document.body.appendChild(h);
+        </script>
+    </body>
+</html>
+
