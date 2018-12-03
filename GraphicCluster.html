@@ -31,7 +31,7 @@
                   }
                 }
             }
-
+            console.log(classification);
             return classification;
         }
 
@@ -51,6 +51,26 @@
             return clusterCircles;
         }
 
+        function positioning(postion, x, y, m, r) {
+            switch (postion) {
+                case 0:
+                    return {x: x + m + r, y: y - m - r}
+                    break;
+                case 1:
+                    return {x: x - m - r, y: y - m - r}
+                    break;
+                case 2:
+                    return {x: x - m - r, y: y + m + r}
+                    break;
+                case 3:
+                    return {x: x + m + r, y: y + m + r}
+                    break;
+                default:
+                    return {x: x , y: r}
+                    break;
+            }
+        }
+
         function createGraphic(singles, height, width){
             this.height = height;
             this.width = width;
@@ -62,7 +82,7 @@
             var margin = 3;
 
             var radiusSize = {'XLarge': (height/2)*.45, 'large': (height/2)*.40, 'medium':(height/2)*.35,'small':(height/2)*.30};
-            var colorSize = {'XLarge': '#f2b318', 'large': '#4480ac', 'medium': '#92b264','small':'#e8355c'};
+            var colorType = {'fieldService': '#f2b318', 'inspection': '#4480ac', 'maintinance': '#92b264','wellServices':'#e8355c'};
             
             var XLarge = (height/2)*.45;
             var large = (height/2)*.40;
@@ -75,10 +95,10 @@
 
             var clusterCircleProperties = setupClusterCircles(classifySingles(singles));
             for (var i = clusterCircleProperties.length - 1; i >= 0; i--) {
-                circles.push( new Circle(   orginX + margin + radiusSize[clusterCircleProperties[i].size], 
-                                            orginY - margin - radiusSize[clusterCircleProperties[i].size],
+                circles.push( new Circle(   positioning(i,orginX,orginY,margin,radiusSize[clusterCircleProperties[i].size]).x, 
+                                            positioning(i,orginX,orginY,margin,radiusSize[clusterCircleProperties[i].size]).y,
                                             radiusSize[clusterCircleProperties[i].size],
-                                            colorSize[clusterCircleProperties[i].size],
+                                            colorType[clusterCircleProperties[i].type],
                                             clusterCircleProperties[i].count ));
             }
 
@@ -112,7 +132,9 @@
             this.cr = cr;
             this.color = color;
             this.label = label;
-
+            this.circle = document.createElementNS(svgNS,'circle');
+            this.g = document.createElementNS(svgNS,"g");
+            this.label = document.createElementNS(svgNS, 'text');
             //connection nodes
             // For a circle with origin (j, k) and radius r:
             // x(t) = r cos(t) + j
@@ -128,7 +150,6 @@
                                         ];
             } 
 
-            this.circle = document.createElementNS(svgNS,'circle');
 
             this.constractCircle = function(){
                 this.circle.setAttribute('cx', cx);
@@ -139,6 +160,11 @@
                 this.circle.setAttribute('fill', this.color);
                 this.circle.setAttribute('fill-opacity', 0.4);
 
+                this.label.setAttribute('x', cx);
+                this.label.setAttribute('y', cy);
+                this.label.setAttribute('fill', '#000');
+                this.label.textContent = label;
+
                 this.circle.addEventListener('mouseover', function(e) {
                 e.currentTarget.setAttribute('stroke-width', 3);
                 });
@@ -146,6 +172,9 @@
                 this.circle.addEventListener('mouseleave', function(e) {
                 e.currentTarget.setAttribute('stroke-width', 2);
                 });
+
+                this.g.appendChild(this.circle);
+                this.g.appendChild(this.label);
             }
 
             this.getX = function(){
@@ -166,7 +195,7 @@
 
             this.getCircleNode = function() {
                 this.constractCircle();
-                return this.circle;
+                return this.g;
             };
 
             this.fill = function(color) {
