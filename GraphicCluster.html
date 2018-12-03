@@ -28,7 +28,7 @@
             var orginX = this.width/2;
             var orginY = this.height/2;
 
-            var motherCircleRadius = 10;
+            var motherCircleRadius = 5;
             var margin = 5;
 
             var XLarge = (height/2)*.45;
@@ -57,10 +57,7 @@
             var lowerRight = new Circle(orginX + margin + large, orginY + margin + large, large,'#e8355c');
 
 
-            svg.appendChild(upperRight.connectToMother(motherCircle));
-            svg.appendChild(lowerRight.connectToMother(motherCircle));
-            svg.appendChild(upperLeft.connectToMother(motherCircle));
-            svg.appendChild(lowerLeft.connectToMother(motherCircle));
+
 
             svg.appendChild(motherCircle.getCircleNode());
 
@@ -68,6 +65,11 @@
             svg.appendChild(upperLeft.getCircleNode());
             svg.appendChild(lowerLeft.getCircleNode());
             svg.appendChild(lowerRight.getCircleNode());
+
+            svg.appendChild(upperRight.connectToMother(motherCircle));
+            svg.appendChild(lowerRight.connectToMother(motherCircle));
+            svg.appendChild(upperLeft.connectToMother(motherCircle));
+            svg.appendChild(lowerLeft.connectToMother(motherCircle));
  
         }
 
@@ -111,8 +113,13 @@
                 this.circle.setAttribute("stroke-width", 2);
                 this.circle.setAttribute('fill', this.color);
                 this.circle.setAttribute('fill-opacity', 0.4);
+
                 this.circle.addEventListener('mouseover', function(e) {
-                //e.currentTarget.setAttribute('fill', 'gray');
+                e.currentTarget.setAttribute('stroke-width', 3);
+                });
+
+                this.circle.addEventListener('mouseleave', function(e) {
+                e.currentTarget.setAttribute('stroke-width', 2);
                 });
             }
 
