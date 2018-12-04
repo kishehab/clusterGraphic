@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>SimpleMarkerSymbol with SVG Path - Simplified</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.26/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.26/dojox/widget/ColorPicker/ColorPicker.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.26/esri/css/esri.css">
+    <style>
+      html, body, #map {
+        height:100%;
+        width:100%;
+        margin:0;
+        padding:0;
+      }
+      .dojoxColorPicker {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        -moz-box-shadow: 0 0 7px #888;
+        -webkit-box-shadow: 0 0 7px #888;
+        box-shadow: 0 0 7px #888;
+      }
+    </style>
+    <script src="https://js.arcgis.com/3.26/"></script>
+    <script>
+      var map;
+      
+      require([
+        "esri/map", "esri/geometry/Point", 
+        "esri/symbols/SimpleMarkerSymbol", "esri/graphic",
+        "dojo/_base/array", "dojo/dom-style", "dojox/widget/ColorPicker", 
+        "dojo/domReady!"
+      ], function(
+        Map, Point,
+        SimpleMarkerSymbol, Graphic,
+        arrayUtils, domStyle, ColorPicker
+      ) {
+
+        map = new Map("map",{
+          basemap: "oceans",
+          center: [ 20, 44 ],
+          zoom: 6,
+          minZoom: 2
+        });
+        
+        map.on("load", mapLoaded);
+      
+        function mapLoaded(){
+          var points = [[19.82,41.33],[16.37,48.21],[18.38,43.85],[23.32,42.7],[16,45.8],[19.08,47.5],[12.48,41.9],[21.17,42.67],[21.43,42],[19.26,42.44],[26.1,44.43],[12.45,43.93],[20.47,44.82],[17.12,48.15],[14.51,46.06],[12.45,41.9]];
+          var iconPath = "M24.0,2.199C11.9595,2.199,2.199,11.9595,2.199,24.0c0.0,12.0405,9.7605,21.801,21.801,21.801c12.0405,0.0,21.801-9.7605,21.801-21.801C45.801,11.9595,36.0405,2.199,24.0,2.199zM31.0935,11.0625c1.401,0.0,2.532,2.2245,2.532,4.968S32.4915,21.0,31.0935,21.0c-1.398,0.0-2.532-2.2245-2.532-4.968S29.697,11.0625,31.0935,11.0625zM16.656,11.0625c1.398,0.0,2.532,2.2245,2.532,4.968S18.0555,21.0,16.656,21.0s-2.532-2.2245-2.532-4.968S15.258,11.0625,16.656,11.0625zM24.0315,39.0c-4.3095,0.0-8.3445-2.6355-11.8185-7.2165c3.5955,2.346,7.5315,3.654,11.661,3.654c4.3845,0.0,8.5515-1.47,12.3225-4.101C32.649,36.198,28.485,39.0,24.0315,39.0z";
+          var initColor = "#ce641d";
+          arrayUtils.forEach(points, function(point) {
+            var graphic = new Graphic(new Point(point), createSymbol(iconPath, initColor));
+            map.graphics.add(graphic);
+          });
+          
+          map.graphics.graphics.forEach(function(graphic){
+             // graphic.setSymbol(createSymbol(iconPath, colorCode));
+            });
+        }
+        
+        function circlePath(cx, cy, r){
+    return 'M '+cx+' '+cy+' m -'+r+', 0 a '+r+','+r+' 0 1,0 '+(r*2)+',0 a '+r+','+r+' 0 1,0 -'+(r*2)+',0';
+}
+        function createSymbol(path, color){
+          var markerSymbol = new esri.symbol.SimpleMarkerSymbol();
+          markerSymbol.setPath(createGraphic(singlesArray, 100,100));
+          //markerSymbol.setColor(new dojo.Color('green'));
+          return markerSymbol;
+        }
+
+
+//}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+        var convertToString = function (arr)
+  {
+    return arr.join(',').replace(p2s, '$1');
+  };
+  
+  var p2s = /,?([achlmqrstvxz]),?/gi;
+  var pathCommand = /([achlmrqstvz])[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029,]*((-?\d*\.?\d*(?:e[\-+]?\d+)?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*)+)/ig;
+  var pathValues = /(-?\d*\.?\d*(?:e[\-+]?\d+)?)[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*/ig;
+
+ function convertToPath(oldElem, rectAsArgs)
+  {
+    if (!oldElem) return;
+    // Create new path element
+    var path = document.createElementNS(svgNS, 'path');
+
+    // All attributes that path element can have
+    var attrs = ['requiredFeatures', 'requiredExtensions', 'systemLanguage', 'id', 'xml:base', 'xml:lang', 'xml:space', 'onfocusin', 'onfocusout', 'onactivate', 'onclick', 'onmousedown', 'onmouseup', 'onmouseover', 'onmousemove', 'onmouseout', 'onload', 'alignment-baseline', 'baseline-shift', 'clip', 'clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering', 'cursor', 'direction', 'display', 'dominant-baseline', 'enable-background', 'fill', 'fill-opacity', 'fill-rule', 'filter', 'flood-color', 'flood-opacity', 'font-family', 'font-size', 'font-size-adjust', 'font-stretch', 'font-style', 'font-variant', 'font-weight', 'glyph-orientation-horizontal', 'glyph-orientation-vertical', 'image-rendering', 'kerning', 'letter-spacing', 'lighting-color', 'marker-end', 'marker-mid', 'marker-start', 'mask', 'opacity', 'overflow', 'pointer-events', 'shape-rendering', 'stop-color', 'stop-opacity', 'stroke', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'stroke-opacity', 'stroke-width', 'text-anchor', 'text-decoration', 'text-rendering', 'unicode-bidi', 'visibility', 'word-spacing', 'writing-mode', 'class', 'style', 'externalResourcesRequired', 'transform', 'd', 'pathLength'];
+
+    // Copy attributes of oldElem to path
+    var attrName, attrValue;
+    for (var i = 0, ilen = attrs.length; i < ilen; i++)
+    {
+      var attrName = attrs[i];
+      var attrValue = oldElem.getAttribute(attrName);
+      if (attrValue) path.setAttribute(attrName, attrValue);
+    }
+
+    var d = '';
+
+    var valid = function (val)
+    {
+      return !(typeof (val) !== 'number' || val == Infinity || val < 0);
+    }
+
+    // Possibly the cubed root of 6, but 1.81 works best
+    var num = 1.81;
+    var tag = oldElem.tagName;
+    switch (tag)
+    {
+    case 'ellipse':
+    case 'circle':
+      var rx = +oldElem.getAttribute('rx'),
+        ry = +oldElem.getAttribute('ry'),
+        cx = +oldElem.getAttribute('cx'),
+        cy = +oldElem.getAttribute('cy');
+      if (tag == 'circle')
+      {
+        rx = ry = +oldElem.getAttribute('r');
+      }
+
+      d += convertToString([
+   ['M', (cx - rx), (cy)],
+   ['C', (cx - rx), (cy - ry / num), (cx - rx / num), (cy - ry), (cx), (cy - ry)],
+   ['C', (cx + rx / num), (cy - ry), (cx + rx), (cy - ry / num), (cx + rx), (cy)],
+   ['C', (cx + rx), (cy + ry / num), (cx + rx / num), (cy + ry), (cx), (cy + ry)],
+   ['C', (cx - rx / num), (cy + ry), (cx - rx), (cy + ry / num), (cx - rx), (cy)],
+   ['Z']
+  ]);
+      break;
+    case 'path':
+      d = oldElem.getAttribute('d');
+      break;
+    case 'line':
+      var x1 = oldElem.getAttribute('x1'),
+        y1 = oldElem.getAttribute('y1');
+      x2 = oldElem.getAttribute('x2');
+      y2 = oldElem.getAttribute('y2');
+      d = 'M' + x1 + ',' + y1 + 'L' + x2 + ',' + y2;
+      break;
+    case 'polyline':
+      d = 'M' + oldElem.getAttribute('points');
+      break;
+    case 'polygon':
+      d = 'M' + oldElem.getAttribute('points') + 'Z';
+      break;
+    case 'rect':
+      var rx = +oldElem.getAttribute('rx'),
+        ry = +oldElem.getAttribute('ry'),
+        b = oldElem.getBBox(),
+        x = b.x,
+        y = b.y,
+        w = b.width,
+        h = b.height;
+
+      // Validity checks from http://www.w3.org/TR/SVG/shapes.html#RectElement:
+      // If neither ‘rx’ nor ‘ry’ are properly specified, then set both rx and ry to 0. (This will result in square corners.)
+      if (!valid(rx) && !valid(ry)) rx = ry = 0;
+      // Otherwise, if a properly specified value is provided for ‘rx’, but not for ‘ry’, then set both rx and ry to the value of ‘rx’.
+      else if (valid(rx) && !valid(ry)) ry = rx;
+      // Otherwise, if a properly specified value is provided for ‘ry’, but not for ‘rx’, then set both rx and ry to the value of ‘ry’.
+      else if (valid(ry) && !valid(rx)) rx = ry;
+      else
+      {
+        // If rx is greater than half of ‘width’, then set rx to half of ‘width’.
+        if (rx > w / 2) rx = w / 2;
+        // If ry is greater than half of ‘height’, then set ry to half of ‘height’.
+        if (ry > h / 2) ry = h / 2;
+      }
+
+      if (!rx && !ry)
+      {
+        d += convertToString([
+      ['M', x, y],
+      ['L', x + w, y],
+      ['L', x + w, y + h],
+      ['L', x, y + h],
+      ['L', x, y],
+      ['Z']
+     ]);
+      }
+      else if (rectAsArgs)
+      {
+        d += convertToString([
+      ['M', x + rx, y],
+      ['H', x + w - rx],
+      ['A', rx, ry, 0, 0, 1, x + w, y + ry],
+      ['V', y + h - ry],
+      ['A', rx, ry, 0, 0, 1, x + w - rx, y + h],
+      ['H', x + rx],
+      ['A', rx, ry, 0, 0, 1, x, y + h - ry],
+      ['V', y + ry],
+      ['A', rx, ry, 0, 0, 1, x + rx, y]
+      ]);
+      }
+      else
+      {
+        var num = 2.19;
+        if (!ry) ry = rx
+        d += convertToString([
+    ['M', x, y + ry],
+    ['C', x, y + ry / num, x + rx / num, y, x + rx, y],
+    ['L', x + w - rx, y],
+    ['C', x + w - rx / num, y, x + w, y + ry / num, x + w, y + ry],
+    ['L', x + w, y + h - ry],
+    ['C', x + w, y + h - ry / num, x + w - rx / num, y + h, x + w - rx, y + h],
+    ['L', x + rx, y + h],
+    ['C', x + rx / num, y + h, x, y + h - ry / num, x, y + h - ry],
+    ['L', x, y + ry],
+    ['Z']
+     ]);
+      }
+      break;
+    default:
+      //path.parentNode.removeChild(path);
+      break;
+    }
+
+    if (d) path.setAttribute('d', d);
+
+    // Replace the current element with the converted one
+    console.log(oldElem, '------>', d)
+    return path;
+  };
+
+        var singlesArray = [
+            {jobType: 'inspection'},
+            {jobType: 'inspection'},
+            {jobType: 'inspection'},
+            {jobType: 'maintinance'},
+            {jobType: 'maintinance'},
+            {jobType: 'maintinance'},
+            {jobType: 'maintinance'},
+            {jobType: 'maintinance'},
+            {jobType: 'wellServices'},
+            {jobType: 'wellServices'},
+            {jobType: 'fieldService'}
+        ];
+        
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        var svgNS = svg.namespaceURI;
+        
+        //#e8355c, #f2b318, #92b264, #4480ac
+        function classifySingles(singles){
+            var classification = {};
+            for(var i=0; i<singles.length; i++){
+                for(var key in singles[i]){
+                  if(classification[singles[i][key]]===undefined){
+                        classification[singles[i][key]] = 1
+                  } else {
+                        classification[singles[i][key]] = classification[singles[i][key]]+1;
+                  }
+                }
+            }
+            console.log(classification);
+            return classification;
+        }
+
+        function setupClusterCircles(classificationObjects){
+            
+            var clusterCircles = [];
+            var sizes = ['XLarge','large','medium','small'];
+
+            for(var k in classificationObjects){
+                clusterCircles.push({
+                    'type': k,
+                    'count': classificationObjects[k],
+                    'size': sizes[Math.floor(Math.random()*sizes.length)]
+                });
+            }
+
+            return clusterCircles;
+        }
+
+        function positioning(postion, x, y, m, r) {
+            switch (postion) {
+                case 0:
+                    return {x: x + m + r, y: y - m - r}
+                    break;
+                case 1:
+                    return {x: x - m - r, y: y - m - r}
+                    break;
+                case 2:
+                    return {x: x - m - r, y: y + m + r}
+                    break;
+                case 3:
+                    return {x: x + m + r, y: y + m + r}
+                    break;
+                default:
+                    return {x: x , y: r}
+                    break;
+            }
+        }
+
+        function createGraphic(singles, height, width){
+            this.height = height;
+            this.width = width;
+
+            var orginX = this.width/2;
+            var orginY = this.height/2;
+
+            var motherCircleRadius = 5;
+            var margin = 3;
+
+            var radiusSize = {'XLarge': (height/2)*.45, 'large': (height/2)*.40, 'medium':(height/2)*.35,'small':(height/2)*.30};
+            var colorType = {'fieldService': '#f2b318', 'inspection': '#4480ac', 'maintinance': '#92b264','wellServices':'#e8355c'};
+            
+            var XLarge = (height/2)*.45;
+            var large = (height/2)*.40;
+            var medium = (height/2)*.35;
+            var small = (height/2)*.30;
+
+            var motherCircle  = new Circle(orginX,orginY,motherCircleRadius);
+            var circles = [];
+            //motherCircle.fill('yellow');
+
+            var clusterCircleProperties = setupClusterCircles(classifySingles(singles));
+            for (var i = clusterCircleProperties.length - 1; i >= 0; i--) {
+                circles.push( new Circle(   positioning(i,orginX,orginY,margin,radiusSize[clusterCircleProperties[i].size]).x, 
+                                            positioning(i,orginX,orginY,margin,radiusSize[clusterCircleProperties[i].size]).y,
+                                            radiusSize[clusterCircleProperties[i].size],
+                                            colorType[clusterCircleProperties[i].type],
+                                            clusterCircleProperties[i].count ));
+            }
+
+            console.log(circles);
+            //#e8355c, #f2b318, #92b264, #4480ac
+            // var upperRight = new Circle(orginX + margin + XLarge, orginY - margin - XLarge, XLarge,'#f2b318');
+            // var upperLeft = new  Circle(orginX - margin - small,orginY - margin - small, small,'#4480ac');
+            // var lowerLeft = new  Circle(orginX - margin - medium, orginY + margin + medium, medium,'#92b264');
+            // var lowerRight = new Circle(orginX + margin + large, orginY + margin + large, large,'#e8355c');
+
+            svg.appendChild(motherCircle.getCircleNode());
+
+            for (var i = circles.length - 1; i >= 0; i--) {
+                 svg.appendChild(circles[i].getCircleNode());
+                 svg.appendChild(circles[i].connectToMother(motherCircle));
+
+            }
+
+            
+            return convertToPath(svg.outterHTML);
+ 
+        }
+
+        function addSizeProperty(classification){
+            null;
+        }
+
+        //createGraphic(singlesArray, 100,100);
+
+        function Circle(cx,cy,cr,color,label) {
+
+            this.cx = cx;
+            this.cy = cy;
+            this.cr = cr;
+            this.color = color;
+            this.label = label;
+            this.circle = document.createElementNS(svgNS,'circle');
+            this.g = document.createElementNS(svgNS,"g");
+            this.label = document.createElementNS(svgNS, 'text');
+
+            //connection nodes
+            // For a circle with origin (j, k) and radius r:
+            // x(t) = r cos(t) + j
+            // y(t) = r sin(t) + k
+
+            this.getConnectionNodes = function(){
+
+                return connectionNodes = [  
+                            {name: 'urNode', x: this.cr*Math.cos(Math.PI/4)+this.cx, y:this.cr*Math.sin(Math.PI/4)+this.cy},
+                            {name: 'ulNode', x: this.cr*Math.cos(Math.PI*(3/4))+this.cx, y:this.cr*Math.sin(Math.PI*(3/4))+this.cy},
+                            {name: 'llNode', x: this.cr*Math.cos(Math.PI*(5/4))+this.cx, y:this.cr*Math.sin(Math.PI*(5/4))+this.cy},
+                            {name: 'lrNode', x: this.cr*Math.cos(Math.PI*(7/4))+this.cx, y:this.cr*Math.sin(Math.PI*(7/4))+this.cy}
+                                        ];
+            } 
+
+
+            this.constractCircle = function(){
+                this.circle.setAttribute('cx', cx);
+                this.circle.setAttribute('cy', cy);
+                this.circle.setAttribute('r', cr);
+                this.circle.setAttribute("stroke", this.color);
+                this.circle.setAttribute("stroke-width", 2);
+                this.circle.setAttribute('fill', this.color);
+                this.circle.setAttribute('fill-opacity', 0.4);
+
+                this.label.setAttribute('x', cx);
+                this.label.setAttribute('y', cy);
+                this.label.setAttribute('fill', '#000');
+                this.label.setAttribute('dx', '-1.5%');
+                this.label.setAttribute('dy', '3%');
+                this.label.setAttribute('font-family', 'Arial');
+
+                this.label.textContent = label;
+
+                this.circle.addEventListener('mouseover', function(e) {
+                e.currentTarget.setAttribute('stroke-width', 3);
+                });
+
+                this.circle.addEventListener('mouseleave', function(e) {
+                e.currentTarget.setAttribute('stroke-width', 2);
+                });
+
+                this.path = convertToPath(this.circle);
+
+                this.g.appendChild(this.circle);
+                this.g.appendChild(this.label);
+            }
+
+            this.getX = function(){
+                return this.cx;
+            };
+
+            this.getPath = function(){
+                return this.path.getAttribute('d');
+            }
+
+            this.getY = function(){
+                return this.cy;
+            };
+
+            this.getR = function(){
+                return this.cr;
+            };
+
+            this.location = function(){
+
+            }
+
+            this.getCircleNode = function() {
+                this.constractCircle();
+                return this.g;
+            };
+
+            this.fill = function(color) {
+                this.circle.setAttribute('fill', color);
+            };
+
+            this.connectToMother = function(mother){
+                    var connection = document.createElementNS(svgNS,'line');
+                    var connectionNodes = this.getConnectionNodes();
+                    var motherConnectionNodes = mother.getConnectionNodes();
+                    var a, b, distance, shortestDistance = 1000; 
+
+                    for (var i = motherConnectionNodes.length - 1; i >= 0; i--) {
+                        for (var j = connectionNodes.length - 1; j >= 0; j--) {
+                             a = motherConnectionNodes[i].x - connectionNodes[j].x;
+                             b = motherConnectionNodes[i].y - connectionNodes[j].y;
+                             distance = Math.sqrt( a*a + b*b );
+                    
+                             if(distance <= shortestDistance){
+                                shortestDistance = distance;
+                                connection.setAttribute('x1', motherConnectionNodes[i].x);
+                                connection.setAttribute('y1', motherConnectionNodes[i].y);
+                                connection.setAttribute('x2', connectionNodes[j].x);
+                                connection.setAttribute('y2', connectionNodes[j].y);
+                             }
+                        }
+                    }
+
+                    connection.setAttribute("stroke", "gray");
+                    connection.setAttribute("stroke-width", 1);
+                    return connection;
+            };
+
+    }
+      });
+    </script>
+  </head>
+  <body class="claro">
+    <div id="map"><a id="link"></a></div>
+    <div id="picker1"></div>
+  </body>
+</html>
