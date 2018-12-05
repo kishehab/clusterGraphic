@@ -54,7 +54,7 @@
                   var points = [[19.82,41.33],[16.37,48.21],[18.38,43.85],[23.32,42.7],[16,45.8],[19.08,47.5],[12.48,41.9],[21.17,42.67],[21.43,42],[19.26,42.44],[26.1,44.43],[12.45,43.93],[20.47,44.82]];
 
                   arrayUtils.forEach(points, function(point) {
-                    var graphic = new Graphic(new Point(point), createSymbol());
+                    var graphic = new Graphic(new Point(point), createSymbol(40,40));
                     map.graphics.add(graphic);
                   });
                   
@@ -82,16 +82,16 @@
                                       {jobType: 'wellServices'},
                                       {jobType: 'fieldService'}];
                 
-                function createSymbol(){
+                function createSymbol(w,h){
                   var markerSymbol = new esri.symbol.PictureMarkerSymbol({
                     "angle": 0,
                     "xoffset": 0,
                     "yoffset": 0,
                     "type": "esriPMS",
-                    "url": convertSVGToDataURL(createClusterNode(singlesArray.slice(0, Math.floor(Math.random() * singlesArray.length) + 1), 100,100)),
+                    "url": convertSVGToDataURL(createClusterNode(singlesArray.slice(0, Math.floor(Math.random() * singlesArray.length) + 1), w,h)),
                     "contentType": "image/svg+xml",
-                    "width": 100,
-                    "height": 100
+                    "width": w,
+                    "height": h
                   });
                   return markerSymbol;
                   }
