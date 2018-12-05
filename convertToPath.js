@@ -125,6 +125,5 @@ function convertToPath(oldElem, rectAsArgs) {
     }
     if (d) path.setAttribute('d', d);
     // Replace the current element with the converted one
-    console.log(oldElem, '------>', d)
     return path;
 };
