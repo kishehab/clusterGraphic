@@ -17,6 +17,31 @@
             return classification;
         }
 
+        function assignSize(counting, cnt){
+            var countNumbers = [];
+            var largest, smallest;
+
+            for(var c in counting){
+                countNumbers.push(counting[c]);
+            }
+
+            largest = Math.max.apply(null, countNumbers);
+            smallest = Math.min.apply(null, countNumbers);
+
+            if(cnt >= largest){
+                return 'XLarge';
+            }
+
+            if(cnt <= smallest){
+                return 'small';
+            }
+
+            if(cnt < largest && cnt >smallest){
+                return 'medium'
+            }
+
+        }
+
         function setupClusterCircles(classificationObjects){
             
             var clusterCircles = [];
@@ -26,7 +51,7 @@
                 clusterCircles.push({
                     'type': k,
                     'count': classificationObjects[k],
-                    'size': sizes[Math.floor(Math.random()*sizes.length)]
+                    'size': assignSize(classificationObjects,classificationObjects[k])
                 });
             }
 
