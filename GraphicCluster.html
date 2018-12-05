@@ -58,10 +58,11 @@
                     map.graphics.add(graphic);
                   });
                   
-                  map.graphics.graphics.forEach(function(graphic){
-                     // graphic.setSymbol(createSymbol(iconPath, colorCode));
-                    });
-                }
+                  // map.graphics.graphics.forEach(function(graphic){
+                     
+                  //   });
+                  map.graphics.on('click',function(){console.log('graphic',map.graphics.graphics.length)})
+                }               
 
                 function convertSVGToDataURL(SVG_Element){
                   var _svg = SVG_Element; 
