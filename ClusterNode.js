@@ -64,7 +64,7 @@
             var motherCircleRadius = 5;
             var margin = 3;
 
-            var radiusSize = {'XLarge': (height/2)*.45, 'large': (height/2)*.40, 'medium':(height/2)*.35,'small':(height/2)*.30};
+            var radiusSize = {'XLarge': (height/2)*.44, 'large': (height/2)*.40, 'medium':(height/2)*.35,'small':(height/2)*.30};
             var colorType = {'fieldService': '#f2b318', 'inspection': '#4480ac', 'maintinance': '#92b264','wellServices':'#e8355c'};
             
             var XLarge = (height/2)*.45;
