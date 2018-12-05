@@ -38,13 +38,15 @@
                 this.circle.setAttribute("stroke-width", 2);
                 this.circle.setAttribute('fill', this.color);
                 this.circle.setAttribute('fill-opacity', 0.4);
+
                 this.label.setAttribute('x', cx);
                 this.label.setAttribute('y', cy);
                 this.label.setAttribute('fill', '#000');
-                this.label.setAttribute('dx', '-1.5%');
-                this.label.setAttribute('dy', '3%');
+                this.label.setAttribute('dy', '.4em');
                 this.label.setAttribute('font-family', 'Arial');
                 this.label.textContent = label;
+                this.label.setAttribute('text-anchor','middle')
+                
                 this.circle.addEventListener('mouseover', function(e) {
                     e.currentTarget.setAttribute('stroke-width', 3);
                 });
