@@ -1,5 +1,5 @@
         
-        var svgNS = document.createElementNS("http://www.w3.org/2000/svg", "svg");.namespaceURI;
+        var svgNS = document.createElementNS("http://www.w3.org/2000/svg", "svg").namespaceURI;
         
         //#e8355c, #f2b318, #92b264, #4480ac
         function classifySingles(singles){
