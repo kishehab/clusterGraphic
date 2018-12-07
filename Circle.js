@@ -12,7 +12,7 @@
             // x(t) = r cos(t) + j
             // y(t) = r sin(t) + k
             this.getConnectionNodes = function() {
-                return connectionNodes = [{
+                return   [{
                     name: 'urNode',
                     x: this.cr * Math.cos(Math.PI / 4) + this.cx,
                     y: this.cr * Math.sin(Math.PI / 4) + this.cy
@@ -29,7 +29,8 @@
                     x: this.cr * Math.cos(Math.PI * (7 / 4)) + this.cx,
                     y: this.cr * Math.sin(Math.PI * (7 / 4)) + this.cy
                 }];
-            }
+            };
+
             this.constractCircle = function() {
                 this.circle.setAttribute('cx', cx);
                 this.circle.setAttribute('cy', cy);
@@ -45,7 +46,7 @@
                 this.label.setAttribute('dy', '.4em');
                 this.label.setAttribute('font-family', 'Arial');
                 this.label.textContent = label;
-                this.label.setAttribute('text-anchor','middle')
+                this.label.setAttribute('text-anchor','middle');
                 
                 this.circle.addEventListener('mouseover', function(e) {
                     e.currentTarget.setAttribute('stroke-width', 3);
@@ -56,11 +57,11 @@
                 this.path = convertToPath(this.circle);
                 this.g.appendChild(this.circle);
                 this.g.appendChild(this.label);
-            }
+            };
             
             this.getPath = function() {
                 return this.path.getAttribute('d');
-            }
+            };
             this.getX = function() {
                 return this.cx;
             };
@@ -70,7 +71,7 @@
             this.getR = function() {
                 return this.cr;
             };
-            this.location = function() {}
+            this.location = function() {};
             this.getCircleNode = function() {
                 this.constractCircle();
                 return this.g;

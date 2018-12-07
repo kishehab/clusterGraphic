@@ -2,13 +2,13 @@
         var svgNS = document.createElementNS("http://www.w3.org/2000/svg", "svg").namespaceURI;
         
         //#e8355c, #f2b318, #92b264, #4480ac
-        function classifySingles(singles){
+        function classifySingles(singles, propertyKey){
             var classification = {};
             for(var i=0; i<singles.length; i++){
                 for(var key in singles[i]){
-                  if(classification[singles[i][key]]===undefined){
-                        classification[singles[i][key]] = 1
-                  } else {
+                  if( key === propertyKey && classification[singles[i][key]] === undefined){
+                        classification[singles[i][key]] = 1;
+                  } else if(key === propertyKey) {
                         classification[singles[i][key]] = classification[singles[i][key]]+1;
                   }
                 }
@@ -37,7 +37,7 @@
             }
 
             if(cnt < largest && cnt >smallest){
-                return 'medium'
+                return 'medium';
             }
 
         }
@@ -61,20 +61,15 @@
         function positioning(postion, x, y, m, r) {
             switch (postion) {
                 case 0:
-                    return {x: x + m + r, y: y - m - r}
-                    break;
+                    return {x: x + m + r, y: y - m - r};
                 case 1:
-                    return {x: x - m - r, y: y - m - r}
-                    break;
+                    return {x: x - m - r, y: y - m - r};
                 case 2:
-                    return {x: x - m - r, y: y + m + r}
-                    break;
+                    return {x: x - m - r, y: y + m + r};
                 case 3:
-                    return {x: x + m + r, y: y + m + r}
-                    break;
+                    return {x: x + m + r, y: y + m + r};
                 default:
-                    return {x: x , y: r}
-                    break;
+                    return {x: x , y: r};
             }
         }
 
@@ -89,19 +84,19 @@
             var motherCircleRadius = 5;
             var margin = 3;
 
-            var radiusSize = {'XLarge': (height/2)*.44, 'large': (height/2)*.40, 'medium':(height/2)*.35,'small':(height/2)*.30};
+            var radiusSize = {'XLarge': (height/2)*0.44 , 'large': (height/2)*0.40, 'medium':(height/2)*0.35,'small':(height/2)*0.30};
             var colorType = {'fieldService': '#f2b318', 'inspection': '#4480ac', 'maintinance': '#92b264','wellServices':'#e8355c'};
             
-            var XLarge = (height/2)*.45;
-            var large = (height/2)*.40;
-            var medium = (height/2)*.35;
-            var small = (height/2)*.30;
+            var XLarge = (height/2)*0.45;
+            var large = (height/2)*0.40;
+            var medium = (height/2)*0.35;
+            var small = (height/2)*0.30;
 
             var motherCircle  = new Circle(orginX,orginY,motherCircleRadius);
             var circles = [];
             //motherCircle.fill('yellow');
 
-            var clusterCircleProperties = setupClusterCircles(classifySingles(singles));
+            var clusterCircleProperties = setupClusterCircles(classifySingles(singles, 'jobType'));
             for (var i = clusterCircleProperties.length - 1; i >= 0; i--) {
                 circles.push( new Circle(   positioning(i,orginX,orginY,margin,radiusSize[clusterCircleProperties[i].size]).x, 
                                             positioning(i,orginX,orginY,margin,radiusSize[clusterCircleProperties[i].size]).y,
@@ -110,18 +105,11 @@
                                             clusterCircleProperties[i].count ));
             }
 
-            //console.log(circles);
-            //#e8355c, #f2b318, #92b264, #4480ac
-            // var upperRight = new Circle(orginX + margin + XLarge, orginY - margin - XLarge, XLarge,'#f2b318');
-            // var upperLeft = new  Circle(orginX - margin - small,orginY - margin - small, small,'#4480ac');
-            // var lowerLeft = new  Circle(orginX - margin - medium, orginY + margin + medium, medium,'#92b264');
-            // var lowerRight = new Circle(orginX + margin + large, orginY + margin + large, large,'#e8355c');
-
             svg.appendChild(motherCircle.getCircleNode());
 
-            for (var i = circles.length - 1; i >= 0; i--) {
-                 svg.appendChild(circles[i].getCircleNode());
-                 svg.appendChild(circles[i].connectToMother(motherCircle));
+            for (var m = circles.length - 1; m >= 0; m--) {
+                 svg.appendChild(circles[m].getCircleNode());
+                 svg.appendChild(circles[m].connectToMother(motherCircle));
 
             }
             return svg;
