@@ -45,6 +45,7 @@
                 this.label.setAttribute('fill', '#000');
                 this.label.setAttribute('dy', '.4em');
                 this.label.setAttribute('font-family', 'Arial');
+                this.label.setAttribute('font-size', 11);
                 this.label.textContent = label;
                 this.label.setAttribute('text-anchor','middle');
                 
