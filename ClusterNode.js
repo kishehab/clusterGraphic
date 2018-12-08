@@ -84,13 +84,13 @@
             var motherCircleRadius = 5;
             var margin = 3;
 
-            var radiusSize = {'XLarge': (height/2)*0.44 , 'large': (height/2)*0.40, 'medium':(height/2)*0.35,'small':(height/2)*0.30};
+            var radiusSize = {'XLarge': (this.height/2)*0.42 , 'large': (this.height/2)*0.39, 'medium':(this.height/2)*0.35,'small':(this.height/2)*0.30};
             var colorType = {'fieldService': '#f2b318', 'inspection': '#4480ac', 'maintinance': '#92b264','wellServices':'#e8355c'};
             
-            var XLarge = (height/2)*0.45;
-            var large = (height/2)*0.40;
-            var medium = (height/2)*0.35;
-            var small = (height/2)*0.30;
+            var XLarge = (this.height/2)*0.45;
+            var large = (this.height/2)*0.40;
+            var medium = (this.height/2)*0.35;
+            var small = (this.height/2)*0.30;
 
             var motherCircle  = new Circle(orginX,orginY,motherCircleRadius);
             var circles = [];
