@@ -124,6 +124,6 @@ function convertToPath(oldElem, rectAsArgs) {
             break;
     }
     if (d) path.setAttribute('d', d);
-    // Replace the current element with the converted one
+    // Replace the current element with the converted one.
     return path;
 };
