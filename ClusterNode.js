@@ -89,11 +89,6 @@
 
             var radiusSize = {'XLarge': (this.height/2)*0.42 , 'large': (this.height/2)*0.39, 'medium':(this.height/2)*0.35,'small':(this.height/2)*0.30};
             var colorType = {'fieldService': '#f2b318', 'inspection': '#4480ac', 'maintinance': '#92b264','wellServices':'#e8355c'};
-            
-            var XLarge = (this.height/2)*0.45;
-            var large = (this.height/2)*0.40;
-            var medium = (this.height/2)*0.35;
-            var small = (this.height/2)*0.30;
 
             var motherCircle  = new Circle(orginX,orginY,motherCircleRadius);
             var circles = [];
@@ -111,6 +106,7 @@
             svg.appendChild(motherCircle.getCircleNode());
 
             for (var m = circles.length - 1; m >= 0; m--) {
+                 circles[m].setTextSize(this.height/5);
                  svg.appendChild(circles[m].getCircleNode());
                  svg.appendChild(circles[m].connectToMother(motherCircle));
 

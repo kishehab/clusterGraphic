@@ -4,6 +4,7 @@
             this.cr = cr;
             this.color = color;
             this.label = label;
+            this.labelSize = 10;
             this.circle = document.createElementNS(svgNS, 'circle');
             this.g = document.createElementNS(svgNS, "g");
             this.label = document.createElementNS(svgNS, 'text');
@@ -45,7 +46,7 @@
                 this.label.setAttribute('fill', '#000');
                 this.label.setAttribute('dy', '.4em');
                 this.label.setAttribute('font-family', 'Arial');
-                this.label.setAttribute('font-size', 11);
+                this.label.setAttribute('font-size', this.labelSize);
                 this.label.textContent = label;
                 this.label.setAttribute('text-anchor','middle');
                 
@@ -80,6 +81,11 @@
             this.fill = function(color) {
                 this.circle.setAttribute('fill', color);
             };
+
+            this.setTextSize = function(textSize){
+                this.labelSize = textSize;
+            };
+
             this.connectToMother = function(mother) {
                 var connection = document.createElementNS(svgNS, 'line');
                 var connectionNodes = this.getConnectionNodes();
