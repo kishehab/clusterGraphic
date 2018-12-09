@@ -90,7 +90,7 @@
             var radiusSize = {'XLarge': (this.height/2)*0.42 , 'large': (this.height/2)*0.39, 'medium':(this.height/2)*0.35,'small':(this.height/2)*0.30};
             var colorType = {'fieldService': '#f2b318', 'inspection': '#4480ac', 'maintinance': '#92b264','wellServices':'#e8355c'};
 
-            var motherCircle  = new Circle(orginX,orginY,motherCircleRadius);
+            var motherCircle  = new Circle(orginX,orginY,motherCircleRadius, '', '');
             var circles = [];
             //motherCircle.fill('yellow');
 
