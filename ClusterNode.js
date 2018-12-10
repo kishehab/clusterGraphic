@@ -9,7 +9,7 @@
                   if( key === propertyKey && classification[singles[i][key]] === undefined){
                         classification[singles[i][key]] = 1;
                   } else if(key === propertyKey) {
-                        classification[singles[i][key]] = classification[singles[i][key]]+1;
+                        classification[singles[i][key]]++;
                   }
                 }
             }
@@ -18,12 +18,8 @@
         }
 
         function assignSize(counting, cnt){
-            var countNumbers = [];
+            var countNumbers = Object.values(counting);
             var largest, smallest;
-
-            for(var c in counting){
-                countNumbers.push(counting[c]);
-            }
 
             largest = Math.max.apply(null, countNumbers);
             smallest = Math.min.apply(null, countNumbers);
