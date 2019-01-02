@@ -8,10 +8,7 @@
             this.circle = document.createElementNS(svgNS, 'circle');
             this.g = document.createElementNS(svgNS, "g");
             this.label = document.createElementNS(svgNS, 'text');
-            //connection nodes
-            // For a circle with origin (j, k) and radius r:
-            // x(t) = r cos(t) + j
-            // y(t) = r sin(t) + k
+            
             this.getConnectionNodes = function() {
                 return   [{
                     name: 'urNode',
@@ -73,7 +70,7 @@
             this.getR = function() {
                 return this.cr;
             };
-            this.location = function() {};
+            
             this.getCircleNode = function() {
                 this.constractCircle();
                 return this.g;

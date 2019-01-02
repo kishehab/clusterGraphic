@@ -107,5 +107,6 @@
                  svg.appendChild(circles[m].connectToMother(motherCircle));
 
             }
+            console.log('----------SVG',svg);
             return svg;
         }
